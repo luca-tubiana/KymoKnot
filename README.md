@@ -29,10 +29,10 @@ Phys. Rev. Lett. 107, pg 188302 (2011).
 
 KymoKnot is a direct evolution of [LocKnot](https://bitbucket.org/locknot/locknot)
 
-##Installation
+## Installation
 From the base directory, run `make`. This will compile also the local version of qhull needed by the Minimally-Interfering closure algorithm.
 
-##Usage
+## Usage
 usage: `KymoKnot_ring.x [options] input_file` (the same holds for KymoKnot_linear.x).
 
 input file must be in the format:
@@ -43,16 +43,16 @@ input file must be in the format:
         ...
 where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` must coincide.  Several configurations can be given one after the other in the same input file
 
-###OUTPUT
+### OUTPUT
 - BU__  [ -b option ]: shortest knotted portion. Bottom-up search
 - NBU__ [ -u option ]:  bottom-up search, without unknottedness check on complementar arc
 - TD__  [ -t option ]: shortest continuosly knotted portion. Top-down search
 
-###OUTPUT FILE FORMAT:
+### OUTPUT FILE FORMAT:
  `RING i Adet_1 Adet_2 start end Length` where `i` is the index of the ring, `Adet_1` and `Adet_2` are the Alexander determinants start end and length are the starting point, ending point and length of the knotted portion.  In `KymoKnot_ring.x` and `KymoKnot_linear.x`, when sevearl knotted portions are found they are printed on the same line.
 
 -------------------------------------------------------
-##OPTIONS:
+## OPTIONS:
 * -h:              print this help and exit.
 * -s <max_stride>:         maximum stride for rectification. Default is none. Negative values in input set the stride to unlimited
 * -m <mem_size>:   USE WITH CAUTION! Set the size of memory manually. Insert the expected length of the chain after simplification.
