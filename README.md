@@ -1,6 +1,6 @@
 # KymoKnot - A software package and webserver to identify and locate knots
 
-KymoKnot provides programs and libraries to localize the knotted portion of knotted rings and linear chains. The Minimally-Interfering closure [1] is used to circularize both linear chains and chain subportions. An interactive web-server interface is available at [](http://dl413f.usc.edu/kntloc/interactive.php).
+KymoKnot provides programs and libraries to localize the knotted portion of knotted rings and linear chains. The Minimally-Interfering closure [1] is used to circularize both linear chains and chain subportions. An interactive web-server interface is available at [http://dl413f.usc.edu/kntloc/interactive.php](http://dl413f.usc.edu/kntloc/interactive.php).
 
 The package currently provides 3 programs.
 
