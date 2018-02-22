@@ -505,7 +505,7 @@ void KNTL_TDloc_rect1 ( KNTarc * knt_ptr, KNTarc * knt_rect, int st_p, int end_p
         }
         else
         {
-          f_matrix[i][j-1] = FALSE;
+          f_matrix[I][j-1] = FALSE;
         }
       }
       /* free coordinates in arc and cmp_arc */

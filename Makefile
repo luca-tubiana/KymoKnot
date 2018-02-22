@@ -1,7 +1,8 @@
 #compiler
 CC = gcc
 #compiler flags
-C_FLAGS =  -O3 -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
+#C_FLAGS =  -O3 -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
+C_FLAGS =   -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
 #debug flags
 #C_FLAGS =   -ggdb -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
 #libraries
@@ -30,9 +31,9 @@ K_close.x: $(OBJS) KNTclose.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
 # dependencies
 ./lib/%.o:./lib/%.c
-	$(CC) $(CFLAGS) $< -o $@ -c
+	$(CC) $(C_FLAGS) $< -o $@ -c
 %.o:%.c
-	$(CC) $(CFLAGS) -I $(QHULLHDR) -I $(DIR_HEADERS) $< -o $@ -c
+	$(CC) $(C_FLAGS) -I $(QHULLHDR) -I $(DIR_HEADERS) $< -o $@ -c
 $(QHULLIB)/libqhullstatic.a:
 	cd $(QHULL); make
 clean:
