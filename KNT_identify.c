@@ -141,7 +141,7 @@ void KNTID_get_rolfsen (char *rolf_id,int bfs, KNTid K)
 
 void KNTID_print_knot (char *knot_ids,int bfs, KNTid K)
 {
-	if(bfs<128) { return; }
+	if(bfs<64) { failed("KNTID_print_knot: print buffer too small"); }
 	if(K.k_id >=0 && K.k_id<KTABLE_LEN)
 	{
 		sprintf(knot_ids,"%s %d %d",_rolfsentable[K.k_id],K.Adets[0],K.Adets[1]); 
@@ -150,5 +150,11 @@ void KNTID_print_knot (char *knot_ids,int bfs, KNTid K)
 	{
 		sprintf(knot_ids,"?? %d %d",K.Adets[0],K.Adets[1]);
 	}
+	return;
+}
+void KNTID_print_unknot (char *knot_ids,int bfs)
+{
+	if(bfs<64) { failed("KNTID_print_unknot: print buffer too small"); }
+	sprintf(knot_ids,"%s %d %d",_rolfsentable[K_Un],_ktable[K_Un].Adets[0],_ktable[K_Un].Adets[1]); 
 	return;
 }

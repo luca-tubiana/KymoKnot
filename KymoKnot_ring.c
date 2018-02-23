@@ -37,8 +37,7 @@ int main(int argc,char** argv)
 		//--rectification (excluding first and last bead)
 		int start_local;
 		int end_local;
-		//XXX this is a bit messy, I have to correct it. The function to change is 
-		//print_search_result, which uses param..
+		//XXX this condition needs to be improved
 		if ( param.f_arc_start || param.f_arc_end) { 
 			start_local = param.arc_start;
 			end_local = param.arc_end;
@@ -48,6 +47,10 @@ int main(int argc,char** argv)
 			end_local 	= knt_ptr->len-1;
 			param.arc_start=start_local;
 			param.arc_end=end_local;
+		}
+
+		if (param.f_max_stride==FALSE) { 
+			param.max_stride=knt_ptr->len/50;
 		}
 		knt_rect = KNTLrectify_coord_local ( knt_ptr,start_local,end_local, param._min_stride,param.max_stride );
 		int start = get_idx_rect_chain 	(knt_rect,start_local);
@@ -59,10 +62,8 @@ int main(int argc,char** argv)
 		knt_ptr->knot_type=knt_rect->knot_type;
 		//--bracketing on rectified chain
 		//--Begin the search
-		for (int i = 0 ; i< N_SEARCHES ; i++ )
-		{
-			if (param.search_type[i])
-			{
+		for (int i = 0 ; i< N_SEARCHES ; i++ ) {
+			if (param.search_type[i]) {
 				if(param.f_arc_start || param.f_arc_end) {
 					param.search[i].st_p	=start;
 					param.search[i].end_p	=end;
@@ -70,16 +71,15 @@ int main(int argc,char** argv)
 					param.search[i].st_p	=DONT_CARE;
 					param.search[i].end_p	=DONT_CARE;
 				}
-				if(knot_type.k_id == K_Un)
-				{
-					fprintf(param.search[i].fout,"%d UN\t%d %d\t",param.counter,knt_rect->knot_type.Adets[0],knt_rect->knot_type.Adets[1] );
-					fprintf(param.search[i].fout,"%d %d %d\n",DONT_CARE,DONT_CARE,DONT_CARE);
+				if(knot_type.k_id == K_Un) {
+					int bfs=128;
+					char knot_ids[bfs];
+					KNTID_print_knot(knot_ids,bfs,knot_type);
+					fprintf(param.search[i].fout,"%d \t%s %d %d %d \n",param.counter, knot_ids, DONT_CARE, DONT_CARE, DONT_CARE);
 					fflush(param.search[i].fout);
-				}
-				else
-				{
+				} else {
 					param.search[i].LocFnc_ptr (knt_ptr, knt_rect,param.search[i].st_p,param.search[i].end_p, KNTCqhull_hybrid_close_subchain, param.kntid_ws);
-					print_search_results 		(knt_ptr,&param.search[i],param.counter, &param);
+					print_search_results_ring 		(knt_ptr,&param.search[i],param.counter, &param);
 				}
 			}
 		}

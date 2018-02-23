@@ -39,6 +39,9 @@ int main(int argc,char** argv)
 		//--rectification (excluding first and last bead)
 		int start_local	=0;
 		int end_local		=param.arc_end-param.arc_start;
+		if (param.f_max_stride==FALSE) {
+			param.max_stride=arc_ptr->len/50;
+		}
 		knt_rect = KNTLrectify_coord_local ( &closed_arc,start_local,end_local, param._min_stride,param.max_stride );
 		fprintf(stderr,"closed_arc.len %d -- knt_rect->len %d\n",closed_arc.len, knt_rect->len);
 		//--compute knot type of closed portion
@@ -48,22 +51,19 @@ int main(int argc,char** argv)
 		int start = get_idx_rect_chain 	(knt_rect,start_local);
 		int end 	= get_idx_rect_chain 	(knt_rect,end_local);
 		//--Begin the search
-		for (int i = 0 ; i< N_SEARCHES ; i++ )
-		{
-			if (param.search_type[i])
-			{
+		for (int i = 0 ; i< N_SEARCHES ; i++ ) {
+			if (param.search_type[i]) {
 				param.search[i].st_p	=start;
 				param.search[i].end_p=end;
-				if(knot_type.k_id == K_Un)
-				{
-					fprintf(param.search[i].fout,"%d UN\t%d %d\t",param.counter,knt_rect->knot_type.Adets[0],knt_rect->knot_type.Adets[1] );
-					fprintf(param.search[i].fout,"%d %d %d\n",DONT_CARE,DONT_CARE,DONT_CARE);
+				if(knot_type.k_id == K_Un) {
+					int bfs=128;
+					char knot_ids[bfs];
+					KNTID_print_knot(knot_ids,bfs,knot_type);
+					fprintf(param.search[i].fout,"%d \t%s %d %d %d \n",param.counter, knot_ids, DONT_CARE, DONT_CARE, DONT_CARE);
 					fflush(param.search[i].fout);
-				}
-				else
-				{
+				} else {
 					param.search[i].LocFnc_ptr (&closed_arc, knt_rect,param.search[i].st_p,param.search[i].end_p, KNTCqhull_hybrid_close_subchain, param.kntid_ws);
-					print_search_results 		(&closed_arc,&param.search[i],param.counter, &param);
+					print_search_results_linear 		(&closed_arc,&param.search[i],param.counter, &param);
 				}
 			}
 		}

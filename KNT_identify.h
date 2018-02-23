@@ -37,5 +37,6 @@ KNTid	 	KNTID_identify_knot 				( KNTarc *knt_ptr, KNTID_wspace *kid_ws );
 KNTid KNTID_get_knot_from_id (int k_type);
 void KNTID_get_rolfsen (char *rolf_id,int bfs, KNTid K);
 void KNTID_print_knot (char *knot_ids,int bfs, KNTid K);
+void KNTID_print_unknot (char *knot_ids,int bfs);
 
 #endif  //HDR_KNT_IDENTIFY

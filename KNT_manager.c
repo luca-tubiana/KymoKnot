@@ -354,10 +354,13 @@ void settings2string (char *string, struct param_t *param)
 	time_t t = time(NULL);
 	struct tm tm = *localtime(&t);
 	sprintf(string,"#%d-%d-%d %d:%d:%d -- ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-	if (param->max_stride >= 0)
+	if (param->f_max_stride == FALSE) { 
+		sprintf(string,"%s seed: %d \tmax_stride: auto (2%) \tarc_start: %d \tarc_end: %d \tclosure: %c\n", string, param->seed,param->arc_start,param->arc_end,param->closure_type);
+	}else if (param->max_stride >= 0){
 		sprintf(string,"%s seed: %d \tmax_stride: %d \tarc_start: %d \tarc_end: %d \tclosure: %c\n", string, param->seed,param->max_stride,param->arc_start,param->arc_end,param->closure_type);
-	else
+	} else {
 		sprintf(string,"%s seed: %d \t max_stride: unlimited: \t arc_start: %d \t arc_end: %d \tclosure: %c\n", string, param->seed,param->arc_start,param->arc_end,param->closure_type);
+	}
 }
 void settings2stderr (char *string, struct param_t *param )
 {
@@ -481,13 +484,17 @@ void set_search_brackets_linear 	(struct param_t *param, int cnt, int arc_len)
 		fprintf(stderr,"CONF %d. search brackets: %d %d\n",cnt,param->arc_start,param->arc_end);
 	}
 	//check on bracketing
+	if(param->f_arc_start == FALSE) {
+		param->arc_start=0;
+	}
+	if(param->f_arc_end == FALSE ) {
+		param->arc_end=arc_len-1;
+	}
 	if(param->arc_end >= arc_len ) {
 		failed("End of specified search region out of boundaries.");
 		param->arc_end = arc_len-1;
-	}  else if (param->arc_end == DONT_CARE ) {
-		param->arc_end = arc_len-1;
-	} else if (param->arc_start == DONT_CARE ) {
-		param->arc_start=0;
+	}  else if (param->arc_start <0 ) {
+		failed("start of specified search region out of boundaries.");
 	}	else if (param->arc_end <= param->arc_start) {
 		failed("Invalid values for polymer portion to search: end <= start!");
 	}
@@ -559,7 +566,7 @@ int get_idx_rect_chain (KNTarc *knt_rect,int idx_orig)
 	return -1;
 }
 
-void print_search_results(KNTarc *knt_ptr, searchManager_t *sM,int cnt, struct param_t *param)
+void print_search_results_linear(KNTarc *knt_ptr, searchManager_t *sM,int cnt, struct param_t *param)
 {
 	KNTarc *knt_here = knt_ptr;;
 	int start, end;
@@ -591,3 +598,37 @@ void print_search_results(KNTarc *knt_ptr, searchManager_t *sM,int cnt, struct p
 	fprintf (sM->fout,"%s\n",line );
 	fflush(sM->fout);
 }
+
+void print_search_results_ring(KNTarc *knt_ptr, searchManager_t *sM,int cnt, struct param_t *param)
+{
+	KNTarc *knt_here = knt_ptr;;
+	int start, end;
+	char line[1024];
+	int bfs=128;
+	char knot_ids[bfs];
+	//2CHECK This need to be improved with a double check on the knot type.
+	sprintf(line,"%d ",cnt);
+	do
+	{
+		if(knt_here->arc_type == sM->arc_id) //identified by search type arc_id
+		{
+			start = knt_here->start;
+			end   = knt_here->end;
+			KNTid K= knt_here->knot_type;
+			//K=KNTID_get_knot_from_id(K.k_id);
+			KNTID_print_knot(knot_ids,bfs,K);
+			sprintf(line,"%s\t%s %d %d %d \t",line,
+					knot_ids, start,end,(end > start)? end - start: end-start+ knt_ptr->len);
+			if (param->print_conf)
+			{
+				fprintf(stderr,"--------------\n");
+				KNTIOprint_arc(stderr,knt_ptr,start,end);
+				fprintf(stderr,"--------------\n");
+			}
+		}
+		knt_here = knt_here->next;
+	}while( knt_here != NULL );
+	fprintf (sM->fout,"%s\n",line );
+	fflush(sM->fout);
+}
+
