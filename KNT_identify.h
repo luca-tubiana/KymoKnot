@@ -15,6 +15,8 @@
 struct  knot_det_workspace{
 	KNTid *known_knots;
 	KNTid  target_knot;
+	int 	 buffer_dim;
+	int 	 alex_dim;
 	double **coord_buffer;
 	ALX_wspace *alx_wspace; //memory used by Alexander determinants computation
 };

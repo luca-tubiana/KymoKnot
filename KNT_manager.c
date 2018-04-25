@@ -429,7 +429,7 @@ void kymoknot_initialize	(struct param_t *param,int argc, char **argv)
 	settings2stderr 				(setting_string,param);
 	searchManagers_init			(param, setting_string);
   initialize_prng 				(param->seed );
-	KNTID_ws_var knt_id_ws_param	=	{2*param->memlen,3200};
+	KNTID_ws_var knt_id_ws_param	=	{2*param->memlen,1000};
 	param->kntid_ws=KNTID_wspace_init(&knt_id_ws_param);
 }
 
