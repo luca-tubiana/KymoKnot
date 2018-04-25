@@ -22,10 +22,22 @@ double scal_d (const double * restrict a, const double * restrict b, int dim)
   double temp;
 
   temp = 0.0;
-  for (i = 0; i < dim; i++)
-    {
-      temp += a[i] * b[i];
-    }
+	switch(dim) {
+		case 1:
+			temp=a[0]*b[0];
+			break;
+		case 2:
+			temp=a[0]*b[0]+a[1]*b[1];
+			break;
+		case 3:
+			temp=a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+			break;
+		default:
+			for (i = 0; i < dim; i++) {
+				temp += a[i] * b[i];
+			}
+			break;
+	}
   return (temp);
 }
 /*******************************/
@@ -187,24 +199,22 @@ int LineFacet(const double * restrict p1, const double * restrict p2, const doub
 	 {
 		 return(FALSE);
 	 }
-
-   d = - scal_d(n,pa,3);
-
 /* Calculate the position on the line that intersects the plane */
    denom = n[0] * bond[0] + n[1] * bond[1] + n[2] * bond[2];
    if (fabs(denom) < EPSIL){         /* Line and plane don't intersect */
      return(FALSE);
    }
 
+   d = - scal_d(n,pa,3);
    mu = - (d + scal_d(n,p1,3))/ denom;
-	 if (mu < -EPSIL2)
+	 if (mu < -EPSIL2 || mu > (1.+EPSIL2))
 	 {
 		 return(FALSE);
 	 }
-	 else if (mu > (1+EPSIL2))
-	 {
-		 return(FALSE);
-	 }
+	// else if (mu > (1+EPSIL2))
+	 //{
+		// return(FALSE);
+	 //}
    //if (mu <  (-EPSIL2) || mu > (1.0 + EPSIL2))   /* Intersection not along line segment */
    //  return(FALSE);
 
