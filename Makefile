@@ -1,8 +1,8 @@
 #compiler
 CC = gcc
 #compiler flags
-#C_FLAGS =  -O3 -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
-C_FLAGS =   -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
+C_FLAGS =  -O3 -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
+#C_FLAGS =   -g -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
 #debug flags
 #C_FLAGS =   -ggdb -Wall -Werror=implicit-function-declaration -std=c99 -fno-omit-frame-pointer
 #libraries
@@ -28,6 +28,8 @@ KymoKnot_ring.x: $(OBJS) KymoKnot_ring.c
 KymoKnot_linear.x: $(OBJS) KymoKnot_linear.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
 K_close.x: $(OBJS) KNTclose.c
+	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
+K_simplify_ring.x: $(OBJS) KNTring_simplify.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
 # dependencies
 ./lib/%.o:./lib/%.c

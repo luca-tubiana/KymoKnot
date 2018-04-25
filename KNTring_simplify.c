@@ -12,7 +12,9 @@
 #include "KNT_closures.h"
 #include "KNT_io.h"
 #include "KNT_qhull.h"
-#include "my_random.h"
+#include "KNT_simplify.h"
+#include "./lib/my_random.h"
+#include "./lib/my_geom.h"
 #include "libgen.h"
 
 #define _VERSION_ "1.0"
@@ -20,7 +22,7 @@
 #define MEMLEN 1000
 #define QH_B_SIZE  16000
 
-void print_help();
+void print_help_rectify();
 void KNT_frame2CM ( KNTarc * knt_ptr );
 
 int main(int argc,char** argv)
@@ -36,7 +38,7 @@ int main(int argc,char** argv)
   //extern double ** COORD_BUFFER;
   int seed = time(NULL)+getpid(); //may be overkilling...
 
-  if(argc < 2) { print_help(); }
+  if(argc < 2) { print_help_rectify(); }
   sprintf(filename,"%s",argv[argc-1]);
   if ((fp_in_data=fopen(filename,"r"))==NULL)
   {
@@ -47,7 +49,7 @@ int main(int argc,char** argv)
   switch (c)
   {
     case 'h':
-      print_help();
+      print_help_rectify();
       break;
     case 's':
       max_stride = atoi(optarg);
@@ -95,7 +97,7 @@ int main(int argc,char** argv)
   return 0;
 }
 
-void print_help()
+void print_help_rectify()
 {
   fprintf(stderr," \n");
   fprintf(stderr,"%s %s version %s\n\nRectify a ring with a given stride [1]\n",__DATE__,__FILE__,_VERSION_);

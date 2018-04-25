@@ -644,7 +644,8 @@ void chain_remove_beads_w_shuffle_nostride ( int oldlen, double ** oldcoord, int
         i++;
       }
 
-    }while ( i != len && len>=5);
+    //}while ( i != len && len>=5);
+    }while ( i < len && len>=5);
     //now increase the stride
   }while ( len != *newlen);
   //copy the coordinates!
