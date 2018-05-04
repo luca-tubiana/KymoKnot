@@ -717,7 +717,7 @@ void KNTL_BUloc_rect1 ( KNTarc * knt_ptr, KNTarc * knt_rect, int st_p, int end_p
 		r_end	 = knt_rect->index[end];
 
 		//questo dovrebbe salvare la degenerazione.
-		if (one_knot_found && len > knot_len)
+		if (one_knot_found && len > knot_len || one_knot_found &&  knot_len==knt_ptr->len )
 		{
 			KNTfree_arc ( &arc );
 			KNTfree_arc ( &cmp_arc );
@@ -787,7 +787,6 @@ void KNTL_BUloc_rect1 ( KNTarc * knt_ptr, KNTarc * knt_rect, int st_p, int end_p
 			strncpy(knt_end->simplification,SIMPRECT,strlen(SIMPRECT));
 			one_knot_found=1;
 			knot_len=len;
-
 		}
     /* free coordinates in arc and cmp_arc */
     KNTfree_arc ( &arc );
