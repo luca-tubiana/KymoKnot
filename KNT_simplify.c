@@ -1,7 +1,7 @@
 #include "KNT_simplify.h"
 #include "my_memory.h"
 #include "messages.h"
-#include "my_random.h"
+#include "marsagliazo.h"
 #include "my_geom.h"
 #include <math.h>
 #include <string.h>
@@ -324,7 +324,7 @@ void chain_remove_beads_new ( int oldlen, double ** oldcoord, int *newlen, doubl
   int     index_local_init = FALSE;
   int      * tempindex;
   double  ** tempcoord;
-  extern long int     * ptr_idum;
+  //extern long int     * ptr_idum;
 #if FOLLOW_BY
   FILE    *fp;
   char    nameout[512];
@@ -402,7 +402,7 @@ void chain_remove_beads_new ( int oldlen, double ** oldcoord, int *newlen, doubl
     for( iter = 0 ; iter < *newlen ; iter++ )
     {
       /* pick bead to remove */
-      j = (int) floor ( ran2( ptr_idum ) * len );
+      j = ranint_(len); 
       i_start = ( j - 1 + len ) % len;
       i_end   = ( j + 1       ) % len;
       copy_chain ( coord, len, tempcoord );
@@ -554,7 +554,7 @@ void chain_remove_beads_w_shuffle_nostride ( int oldlen, double ** oldcoord, int
   int      * tempindex;
   int       * index;
   double   moved_bead[3];
-  extern long int     * ptr_idum;
+  //extern long int     * ptr_idum;
 
   /*
    * allocate memory for indexes arrays,
@@ -592,7 +592,7 @@ void chain_remove_beads_w_shuffle_nostride ( int oldlen, double ** oldcoord, int
       //ie for indices 0..N-1 we go from N-1 to 1
       range = j+1;
       //cerr << "Range is:\t" << range << endl;
-      k = (int) floor ( ran2( ptr_idum ) * range );
+			k = ranint_(range);
       temp = tempindex[k];
       tempindex[k] = tempindex[j];
       tempindex[j] = temp;
@@ -672,7 +672,7 @@ int chain_remove_beads_local ( int oldlen, double ** oldcoord,int start,int end,
   int     index_local_init = FALSE;
   int      * tempindex;
   double  ** tempcoord;
-  extern long int     * ptr_idum;
+  //extern long int     * ptr_idum;
 #if FOLLOW_BY
   FILE    *fp;
   char    nameout[512];
@@ -751,7 +751,8 @@ int chain_remove_beads_local ( int oldlen, double ** oldcoord,int start,int end,
     for( iter = 0 ; iter < *newlen ; iter++ )
     {
       /* pick bead to remove */
-      j = ((int) floor ( ran2( ptr_idum ) * seg_len ) + start) % len;
+      //j = ((int) floor ( ran2( ptr_idum ) * seg_len ) + start) % len;
+      j = (ranint_(seg_len) + start) % len;
       i_start = ( j - 1 + len ) % len;
       i_end   = ( j + 1       ) % len;
       copy_chain ( coord, len, tempcoord );

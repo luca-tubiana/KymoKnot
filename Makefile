@@ -15,7 +15,7 @@ QHULLIB=./qhull-2012.1/lib
 QHULLHDR=./qhull-2012.1/src/libqhull
 #general definitions
 OBJ1=./lib/my_geom.o ./lib/my_memory.o ./lib/messages.o
-OBJ2=./lib/my_random.o Alexander.o
+OBJ2=./lib/marsagliazo.o Alexander.o
 OBJ3=KNT_arc.o
 OBJ4=KNT_closures.o KNT_qhull.o KNT_simplify.o KNT_identify.o
 OBJ5=KNT_lib.o KNT_io.o KNT_manager.o
@@ -39,7 +39,7 @@ K_simplify_ring.x: $(OBJS) KNTring_simplify.c
 $(QHULLIB)/libqhullstatic.a:
 	cd $(QHULL); make
 clean:
-	rm *.o
+	rm *.o ./lib/*.o
 deep-clean:
 	rm *.o *.x
 	cd $(QHULL); make cleanall

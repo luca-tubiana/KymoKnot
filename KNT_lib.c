@@ -4,7 +4,7 @@
 #include "KNT_table.h"
 #include "KNT_simplify.h"
 #include "KNT_identify.h"
-#include "my_random.h"
+#include "marsagliazo.h"
 #include "my_memory.h"
 #include "my_geom.h"
 #include "messages.h"
@@ -601,7 +601,7 @@ void KNTL_BUloc_rect1 ( KNTarc * knt_ptr, KNTarc * knt_rect, int st_p, int end_p
   KNTarc       cmp_arc = KNTarc_DEFAULT;
   KNTarc       tmp     = KNTarc_DEFAULT;
   /* used in the FY shuffle */
-  extern long int * ptr_idum;
+  //extern long int * ptr_idum;
   /*
    * I use this to perform a sorting of arcs with qsort
    */
@@ -822,7 +822,7 @@ void KNTL_UNSloc_rect1 ( KNTarc * knt_ptr, KNTarc * knt_rect, int st_p, int end_
   KNTarc       cmp_arc = KNTarc_DEFAULT;
   KNTarc       tmp     = KNTarc_DEFAULT;
   /* used in the FY shuffle */
-  extern long int * ptr_idum;
+  //extern long int * ptr_idum;
   /*
    * I use this to perform a sorting of arcs with qsort
    */
@@ -1198,30 +1198,27 @@ void KNTLrotate_random ( KNTarc * knt_ptr )
 	double dR;
 	double axis[3];
 	double theta;
-  extern long int     * ptr_idum;
-  if ( knt_ptr == NULL )
-  {
+  //extern long int     * ptr_idum;
+  if ( knt_ptr == NULL ) {
     failed("tryng to rotate a NULL knt_struct!\n");
   }
-  if ( knt_ptr->is_init == FALSE )
-  {
+  if ( knt_ptr->is_init == FALSE ) {
     failed("tryng to rotate a non initialized knt_struct!\n");
   }
-  if ( knt_ptr->coord == NULL )
-  {
+  if ( knt_ptr->coord == NULL ) {
     failed("tryng to rotate an empty knt_struct!\n");
   }
 	//V1,V2 uniformly distributed between (-1,1), so that S=V1^2+V2^2<1
 	do{
-		V1=2*ran2(ptr_idum)-1;
-		V2=2*ran2(ptr_idum)-1;
+		V1=ran2double_();
+		V2=ran2double_();
 		s=V1*V1+V2*V2;
 	}while(s>=1);
-	dR=ran2(ptr_idum)*2.0;
+	dR=ran1double_()*2.0;
 	axis[0]=dR* 2*V1*sqrt(1-s);
 	axis[1]=dR* 2*V2*sqrt(1-s);
 	axis[2]=dR* (1-2*s);
-	theta=ran2(ptr_idum)*PI;
+	theta=ran1double_()*PI;
 	KNTLrotate(knt_ptr,axis,theta);
 }
 

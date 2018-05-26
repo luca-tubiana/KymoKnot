@@ -5,7 +5,7 @@
 #include "KNT_closures.h"
 #include "KNT_io.h"
 #include "./lib/messages.h"
-#include "my_random.h"
+#include "marsagliazo.h"
 #include <libgen.h>
 #include <math.h>
 #include <string.h>
@@ -428,7 +428,8 @@ void kymoknot_initialize	(struct param_t *param,int argc, char **argv)
 	settings2string					(setting_string,param);
 	settings2stderr 				(setting_string,param);
 	searchManagers_init			(param, setting_string);
-  initialize_prng 				(param->seed );
+  //initialize_prng 				(param->seed );
+	initran_								(&param->seed);
 	KNTID_ws_var knt_id_ws_param	=	{2*param->memlen,1000};
 	param->kntid_ws=KNTID_wspace_init(&knt_id_ws_param);
 }

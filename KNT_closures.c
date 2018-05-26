@@ -2,7 +2,7 @@
 #include "KNT_defaults.h"
 #include "my_geom.h"
 #include "my_memory.h"
-#include "my_random.h"
+#include "marsagliazo.h"
 #include "KNT_qhull.h"
 
 /*
@@ -75,7 +75,7 @@ KNTarc  KNTCqhull_hybrid_close_subchain ( KNTarc * ring_ptr, int start, int end)
   extern double  * qhull_buffer;
   extern boolT     qhull_ismalloc;
   extern char      qhull_flags[256];
-  extern long int     * ptr_idum;
+  //extern long int     * ptr_idum;
 
   /* check ring_ptr correct initialization */
   if( ring_ptr->is_init != 1 || ring_ptr->flag_len != 1 || ring_ptr->coord == NULL )
@@ -245,7 +245,7 @@ KNTarc  KNTCqhull_hybrid_close_subchain ( KNTarc * ring_ptr, int start, int end)
     coord_buffer[closed_len][2] = B[2] + cm[2];
     for ( i = 1 ; i < cls_points-1; i++ )
     {
-      phi = PI/2 - PI/40 + ran2(ptr_idum)*PI/20;
+      phi = PI/2 - PI/40 + ran1double_()*PI/20;
       theta += dth;
       closed_len++;
       coord_buffer[closed_len][0]= R_close * cos(theta) * sin(phi) * v_2[0] + R_close * sin(theta) * sin(phi) * v_1[0] + R_close * cos(phi) * v_3[0] + cm[0];
@@ -652,9 +652,9 @@ void uniform_spherical_distribution ( double point[3] )
 {
   double theta;
   double phi;
-  extern long int * ptr_idum;
-  theta = acos( 2 * ran2(ptr_idum) - 1 );
-  phi   = 2 * PI * ran2 ( ptr_idum );
+  //extern long int * ptr_idum;
+  theta = acos( ran2double_() );
+  phi   = 2 * PI * ran1double_();
   point[0] = sin(theta) * cos(phi);
   point[1] = sin(theta) * sin(phi);
   point[2] = cos(theta);
@@ -668,7 +668,7 @@ void great_circle_path(double A[3], double B[3], double C[3], int n, double **co
 	double theta;
 	double dth;
 	double R_close;
-  extern long int * ptr_idum;
+  //extern long int * ptr_idum;
 	double phi;
 	R_close=dist_d(A,C,3);
 	prj_AB = scal_d(A,B,3)/norm_d(B,3);
@@ -691,7 +691,7 @@ void great_circle_path(double A[3], double B[3], double C[3], int n, double **co
 	coord_buffer[0][2] = B[2] + C[2];
 	for ( i = 1 ; i < n-1; i++ )
 	{
-		phi = PI/2 - PI/40 + ran2(ptr_idum)*PI/20;
+		phi = PI/2 - PI/40 + ran1double_()*PI/20;
 		theta += dth;
 		coord_buffer[i][0]= R_close * cos(theta) * sin(phi) * v_2[0] + R_close * sin(theta) * sin(phi) * v_1[0] + R_close * cos(phi) * v_3[0] + C[0];
 		coord_buffer[i][1]= R_close * cos(theta) * sin(phi) * v_2[1] + R_close * sin(theta) * sin(phi) * v_1[1] + R_close * cos(phi) * v_3[1] + C[1];
