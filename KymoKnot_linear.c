@@ -59,7 +59,7 @@ int main(int argc,char** argv)
 					int bfs=128;
 					char knot_ids[bfs];
 					KNTID_print_knot(knot_ids,bfs,knot_type);
-					fprintf(param.search[i].fout,"%d \t%s %d %d %d \n",param.counter, knot_ids, DONT_CARE, DONT_CARE, DONT_CARE);
+					fprintf(param.search[i].fout,"%d \t%s %d %d %d \n",param.counter, knot_ids, -1,-1,-1);
 					fflush(param.search[i].fout);
 				} else {
 					param.search[i].LocFnc_ptr (&closed_arc, knt_rect,param.search[i].st_p,param.search[i].end_p, KNTCqhull_hybrid_close_subchain, param.kntid_ws);

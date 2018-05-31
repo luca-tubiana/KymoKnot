@@ -88,13 +88,13 @@ void print_help()
   fprintf(stderr,"-------------------------------------------------------\n");
   fprintf(stderr,"OPTIONS: \n");
   fprintf(stderr,"\t-h:\t\t print this help and exit.\n");
-  fprintf(stderr,"\t-s <max_stride>:\t maximum stride for rectification. Default is none. Negative values in input set the stride to unlimited \n");
+  fprintf(stderr,"\t-s <max_stride>:\t maximum stride for rectification. Default is 2% of the chain length. Negative values in input set the stride to unlimited \n");
   fprintf(stderr,"\t-m <mem_size>:\t USE WITH CAUTION! Set the size of memory manually. Insert the expected length of the chain after simplification. \n");
   fprintf(stderr,"\t-r <seed>:\t set the pseudo random number generator's seed. Default: use time()+getpid().\n");
   fprintf(stderr,"\t-F <start>:\t (use in conjunction with -T) set the starting point for knot localization. \n");
   fprintf(stderr,"\t-T <end>:\t (use in conjunction with -F) set the ending point for knot localization.\n");
   fprintf(stderr,"\t-b:\t Perform bottom-up search. ( DEFAULT ) \n");
-  fprintf(stderr,"\t-t:\t Perform top-down search.  ( DEFAULT )\n");
+  fprintf(stderr,"\t-t:\t Perform top-down search.  \n");
   fprintf(stderr,"\t-u:\t Perform bottom-up search without checking the complementar arc.\n");
   fprintf(stderr," \n");
 }
@@ -113,7 +113,7 @@ void set_default_behaviour(struct param_t *param)
 	param->closure_type 			=QHULLCLOSUREHYB[0];
 	param->seed							=time(NULL)+getpid();
 	param->search_type[BU]		=TRUE;
-	param->search_type[TD]		=TRUE;
+	param->search_type[TD]		=FALSE;
 	param->search_type[UNS]	=FALSE;
 	param->search[BU] 	= BUsearch_DEFAULT;
 	param->search[TD] 	= TDsearch_DEFAULT;
