@@ -301,3 +301,14 @@ void  KNTIOprint_ring  ( FILE *out, KNTarc * knt_ptr)
 				knt_ptr->coord[0][1],
 				knt_ptr->coord[0][2]);
 }
+void  KNTIOprint_linear  ( FILE *out, KNTarc * knt_ptr )
+{
+	int i;
+	fprintf(out,"%d\n", knt_ptr->len);
+	for (i=0;i<knt_ptr->len;i++) {
+		fprintf(out,"%lf %lf %lf\n",
+				knt_ptr->coord[i][0],
+				knt_ptr->coord[i][1],
+				knt_ptr->coord[i][2]);
+	}
+}

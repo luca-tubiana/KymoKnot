@@ -21,9 +21,10 @@
 
 /* define linked list structure for objects names in hdf5 file */
 /*--load data from file---------------------*/
-KNTarc * KNTIOread_ring        ( FILE * );
-KNTarc * KNTIOread_linear      ( FILE * );
-void 		 KNTIOprint_arc 			 ( FILE *out, KNTarc * knt_ptr, int start, int end);
-void 		 KNTIOprint_ring 			 ( FILE *out, KNTarc * knt_ptr);
+KNTarc * 	KNTIOread_ring		( FILE * );
+KNTarc * 	KNTIOread_linear	( FILE * );
+void 		 	KNTIOprint_arc		( FILE *out, KNTarc * knt_ptr, int start, int end);
+void 		 	KNTIOprint_ring		( FILE *out, KNTarc * knt_ptr);
+void  		KNTIOprint_linear	( FILE *out, KNTarc * knt_ptr);
 
 #endif /* HDR_KNTIO */

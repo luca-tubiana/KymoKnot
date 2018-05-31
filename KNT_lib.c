@@ -4,7 +4,7 @@
 #include "KNT_table.h"
 #include "KNT_simplify.h"
 #include "KNT_identify.h"
-#include "marsagliazo.h"
+#include "prng.h"
 #include "my_memory.h"
 #include "my_geom.h"
 #include "messages.h"
@@ -15,8 +15,6 @@
 #include <math.h>   	/* -std=c99 */
 #include <stdlib.h>
 #include <search.h>  	/* -std=c99 */
-#include <gsl/gsl_math.h> //define constants
-#include <gsl/gsl_blas.h>
 
 /*
  * Internal functions.
@@ -1127,25 +1125,19 @@ KNTarc * _create_sorted_KNTarc_array (int *out_array_len, KNTarc *knt_rect,  int
 	return arcs_array;
 }
 
+
 void KNTLrotate ( KNTarc * knt_ptr, double axis[3], double theta)
 {
-  int i;
   double CsTh, SnTh,OnemCsTh;
   double nx,ny,nz;
-  gsl_vector *v = gsl_vector_alloc (3);
-  gsl_vector *w = gsl_vector_alloc (3);
-  gsl_matrix *R = gsl_matrix_alloc(3,3);
 
-  if ( knt_ptr == NULL )
-  {
+  if ( knt_ptr == NULL ) {
     failed("tryng to rotate a NULL knt_struct!\n");
   }
-  if ( knt_ptr->is_init == FALSE )
-  {
+  if ( knt_ptr->is_init == FALSE ) {
     failed("tryng to rotate a non initialized knt_struct!\n");
   }
-  if ( knt_ptr->coord == NULL )
-  {
+  if ( knt_ptr->coord == NULL ) {
     failed("tryng to rotate an empty knt_struct!\n");
   }
 
@@ -1156,41 +1148,35 @@ void KNTLrotate ( KNTarc * knt_ptr, double axis[3], double theta)
   OnemCsTh = 1 - CsTh;
   //random versor for PIVOT rotation |n| = 1
   //rotation matrix, from quaternions multiplication
+	double R[3][3];
   //first row
-  gsl_matrix_set ( R,0,0,CsTh + nx*nx* OnemCsTh);
-  gsl_matrix_set ( R,0,1,nx*ny*OnemCsTh - nz*SnTh);
-  gsl_matrix_set ( R,0,2,nx*nz*OnemCsTh + ny*SnTh);
+	R[0][0]=CsTh + nx*nx* OnemCsTh;
+	R[0][1]=nx*ny*OnemCsTh - nz*SnTh;
+	R[0][2]=nx*nz*OnemCsTh + ny*SnTh;
   //second row
-  gsl_matrix_set ( R,1,0,nx*ny*OnemCsTh +nz*SnTh);
-  gsl_matrix_set ( R,1,1,CsTh + ny*ny*OnemCsTh);
-  gsl_matrix_set ( R,1,2,ny*nz*OnemCsTh - nx*SnTh);
+	R[1][0]=nx*ny*OnemCsTh +nz*SnTh;
+	R[1][1]=CsTh + ny*ny*OnemCsTh;
+	R[1][2]=ny*nz*OnemCsTh - nx*SnTh;
   //third row
-  gsl_matrix_set ( R,2,0,nx*nz*OnemCsTh - ny*SnTh);
-  gsl_matrix_set ( R,2,1,ny*nz*OnemCsTh + nx*SnTh);
-  gsl_matrix_set ( R,2,2,CsTh + nz*nz*OnemCsTh);
-  for ( i = knt_ptr->len-1; i >=0 ; i-- )
-  {
-    knt_ptr->coord[i][0] -=knt_ptr->coord[0][0];
-    knt_ptr->coord[i][1] -=knt_ptr->coord[0][1];
-    knt_ptr->coord[i][2] -=knt_ptr->coord[0][2];
+	R[2][0]=nx*nz*OnemCsTh - ny*SnTh;
+	R[2][1]=ny*nz*OnemCsTh + nx*SnTh;
+	R[2][2]=CsTh + nz*nz*OnemCsTh;
+	double orig[3];
+	orig[0]=knt_ptr->coord[0][0];
+	orig[1]=knt_ptr->coord[0][1];
+	orig[2]=knt_ptr->coord[0][2];
+	double v[3]={0.,0.,0,};
+  for ( int i = knt_ptr->len-1; i >0 ; i-- ) {
+		v[0]=knt_ptr->coord[i][0]-orig[0];
+		v[1]=knt_ptr->coord[i][1]-orig[1];
+		v[2]=knt_ptr->coord[i][2]-orig[2];
+		knt_ptr->coord[i][0]=R[0][0]*v[0]+R[0][1]*v[1]+R[0][2]*v[2]+orig[0];
+		knt_ptr->coord[i][1]=R[1][0]*v[0]+R[1][1]*v[1]+R[1][2]*v[2]+orig[1];
+		knt_ptr->coord[i][2]=R[2][0]*v[0]+R[2][1]*v[1]+R[2][2]*v[2]+orig[2];
   }
-  for ( i = knt_ptr->len-1; i >0 ; i-- )
-  {
-    gsl_vector_set ( v, 0, knt_ptr->coord[i][0] - knt_ptr->coord[0][0]);
-    gsl_vector_set ( v, 1, knt_ptr->coord[i][1] - knt_ptr->coord[0][1]);
-    gsl_vector_set ( v, 2, knt_ptr->coord[i][2] - knt_ptr->coord[0][2]);
-    gsl_blas_dgemv ( CblasNoTrans, 1, R, v, 0,w);
-
-    knt_ptr->coord[i][0] = gsl_vector_get(w,0);
-    knt_ptr->coord[i][1] = gsl_vector_get(w,1);
-    knt_ptr->coord[i][2] = gsl_vector_get(w,2);
-  }
-	gsl_matrix_free(R);
-	gsl_vector_free(v);
-	gsl_vector_free(w);
 }
 
-void KNTLrotate_random ( KNTarc * knt_ptr )
+void KNTLcentre_rotate_random ( KNTarc * knt_ptr )
 {
 	double s;
 	double V1;
@@ -1219,6 +1205,11 @@ void KNTLrotate_random ( KNTarc * knt_ptr )
 	axis[1]=dR* 2*V2*sqrt(1-s);
 	axis[2]=dR* (1-2*s);
 	theta=ran1double_()*PI;
+	for(int i=knt_ptr->len-1;i>=0;i--) {
+		knt_ptr->coord[i][0]-=knt_ptr->coord[0][0];
+		knt_ptr->coord[i][1]-=knt_ptr->coord[0][1];
+		knt_ptr->coord[i][2]-=knt_ptr->coord[0][2];
+	}
 	KNTLrotate(knt_ptr,axis,theta);
 }
 

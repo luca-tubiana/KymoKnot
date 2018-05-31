@@ -5,7 +5,7 @@
 #include "KNT_closures.h"
 #include "KNT_io.h"
 #include "./lib/messages.h"
-#include "marsagliazo.h"
+#include "prng.h"
 #include <libgen.h>
 #include <math.h>
 #include <string.h>

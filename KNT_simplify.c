@@ -1,7 +1,7 @@
 #include "KNT_simplify.h"
 #include "my_memory.h"
 #include "messages.h"
-#include "marsagliazo.h"
+#include "prng.h"
 #include "my_geom.h"
 #include <math.h>
 #include <string.h>

@@ -50,5 +50,5 @@ void free_buffer ( double ***buff);
 int  KNTLknot_id ( int dets[2] );
 /* rotate knot to change projection*/
 void KNTLrotate ( KNTarc * knt_ptr, double axis[3], double theta);
-void KNTLrotate_random ( KNTarc * knt_ptr );
+void KNTLcentre_rotate_random ( KNTarc * knt_ptr );
 #endif /*HDR_KNT_LIB */

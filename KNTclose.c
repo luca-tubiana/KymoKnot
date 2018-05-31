@@ -12,7 +12,6 @@
 #include "KNT_closures.h"
 #include "KNT_io.h"
 #include "KNT_qhull.h"
-#include "my_random.h"
 #include "libgen.h"
 #include "KNT_manager.h"
 

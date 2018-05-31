@@ -15,7 +15,7 @@ QHULLIB=./qhull-2012.1/lib
 QHULLHDR=./qhull-2012.1/src/libqhull
 #general definitions
 OBJ1=./lib/my_geom.o ./lib/my_memory.o ./lib/messages.o
-OBJ2=./lib/marsagliazo.o Alexander.o
+OBJ2=./lib/prng.o Alexander.o
 OBJ3=KNT_arc.o
 OBJ4=KNT_closures.o KNT_qhull.o KNT_simplify.o KNT_identify.o
 OBJ5=KNT_lib.o KNT_io.o KNT_manager.o
@@ -24,13 +24,13 @@ OBJS=$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ3) $(OBJ4) $(OBJ5) $(QHULLIB)/libqhullstatic.a
 all:  KymoKnot_ring.x KymoKnot_linear.x K_close.x
 
 KymoKnot_ring.x: $(OBJS) KymoKnot_ring.c
-	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
+	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 KymoKnot_linear.x: $(OBJS) KymoKnot_linear.c
-	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
+	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 K_close.x: $(OBJS) KNTclose.c
-	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
+	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 K_simplify_ring.x: $(OBJS) KNTring_simplify.c
-	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm  -lgsl -lgslcblas $(QHULLIB)/libqhullstatic.a -o $@
+	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 # dependencies
 ./lib/%.o:./lib/%.c
 	$(CC) $(C_FLAGS) $< -o $@ -c

@@ -35,7 +35,7 @@ int main(int argc,char** argv)
 		qhull_init(3*(arc_ptr->len+MAX_CLS_POINTS));
 		//close chain and rotate it
     closed_arc = KNTCqhull_hybrid_close_subchain ( arc_ptr, param.arc_start , param.arc_end);
-		KNTLrotate_random(&closed_arc);
+		KNTLcentre_rotate_random(&closed_arc);
 		//--rectification (excluding first and last bead)
 		int start_local	=0;
 		int end_local		=param.arc_end-param.arc_start;

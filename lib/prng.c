@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "marsagliazo.h"
+#include "prng.h"
 //extern FILE *out_save;
 
 /* macros 

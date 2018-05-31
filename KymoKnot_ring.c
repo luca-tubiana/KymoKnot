@@ -33,7 +33,7 @@ int main(int argc,char** argv)
   	//allocate qhull working space
 		qhull_init(3*(knt_ptr->len+MAX_CLS_POINTS));
 		//close chain and rotate it
-		KNTLrotate_random(knt_ptr);
+		KNTLcentre_rotate_random(knt_ptr);
 		//--rectification (excluding first and last bead)
 		int start_local;
 		int end_local;

@@ -2,7 +2,7 @@
 #include "KNT_defaults.h"
 #include "my_geom.h"
 #include "my_memory.h"
-#include "marsagliazo.h"
+#include "prng.h"
 #include "KNT_qhull.h"
 
 /*
