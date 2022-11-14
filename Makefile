@@ -27,7 +27,7 @@ KymoKnot_ring.x: $(OBJS) KymoKnot_ring.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 KymoKnot_linear.x: $(OBJS) KymoKnot_linear.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
-KymoKnot_linear_lammps.x: $(OBJS) KymoKnot_linear_lammps.c
+KymoKnot_linear_lammps.x: $(OBJS) KNTquick_linear_lammps.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
 K_close.x: $(OBJS) KNTclose.c
 	$(CC) $(C_FLAGS)  -I $(DIR_HEADERS)    -I $(QHULLHDR) $^  -lm   $(QHULLIB)/libqhullstatic.a -o $@
