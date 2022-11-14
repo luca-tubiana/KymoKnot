@@ -465,8 +465,8 @@ KNTarc *  KNTIOread_linear_lammps_version(  FILE * fp )
 
         free ( line );
     }
-
-    if ( dist_d (buffer[0],buffer[length-1],3)< 1.0e-6)
+// just based on we set 1 and end to a circle but they are not the same points
+    if ( dist_d (buffer[0],buffer[length-1],3)< 1.2*dist_d (buffer[0],buffer[1],3))
     {
         failed("\nERROR. first and last node do coincide within 1.0e-6,\n we are reading a ring not a linear chain!\n");
     }
