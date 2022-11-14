@@ -282,6 +282,7 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
     line = NULL;
 
     buffer =  d2t(length,3);
+    read = getline (&line,&len,fp);//skip one line in lammps file
 
     for ( i = 0; i < length ; i++ )
     {
@@ -304,7 +305,6 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
         //done reading the line, let's separate it into 3 columns.
         j = 0;
         l_ptr = string;
-        read = getline (&line,&len,fp);//skip one line in lammps file
         for(;;)
         {
             token = strtok_r(l_ptr," ",&saveptr);
