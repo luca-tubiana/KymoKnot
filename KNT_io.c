@@ -340,7 +340,7 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
             free ( col[j+1] );
         }
     }
-    if ( dist_d (buffer[0],buffer[length-1],3)< 1.2*dist_d (buffer[0],buffer[1],3))
+    if ( dist_d (buffer[0],buffer[length-1],3)> 1.2*dist_d (buffer[0],buffer[1],3))
     {
         failed("ERROR. first and last node do not coincide\n");
     }
