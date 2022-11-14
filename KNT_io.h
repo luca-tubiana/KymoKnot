@@ -23,8 +23,8 @@
 /*--load data from file---------------------*/
 KNTarc * 	KNTIOread_ring		( FILE * );
 KNTarc * 	KNTIOread_linear	( FILE * );
+KNTarc *      KNTIOread_linear_lammps_version ( FILE * );
 void 		 	KNTIOprint_arc		( FILE *out, KNTarc * knt_ptr, int start, int end);
 void 		 	KNTIOprint_ring		( FILE *out, KNTarc * knt_ptr);
 void  		KNTIOprint_linear	( FILE *out, KNTarc * knt_ptr);
-
 #endif /* HDR_KNTIO */
