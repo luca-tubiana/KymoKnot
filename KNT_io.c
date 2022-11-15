@@ -280,12 +280,12 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
     length = atoi(token);
     free ( line );
     line = NULL;
-
-    buffer =  d2t(length+1,3); // here we set to make the start and the end point is the same point
+    length ++; // here we set to make the start and the end point is the same point
+    buffer =  d2t(length,3);
     // therefore for a ring with N we need N+1
     read = getline (&line,&len,fp);//skip one line in lammps file
 
-    for ( i = 0; i < length ; i++ )
+    for ( i = 0; i < length-1 ; i++ )
     {
         len = 2048;
         line = (char * ) malloc ( len );
