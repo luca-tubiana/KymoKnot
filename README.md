@@ -26,7 +26,7 @@ Phys. Rev. Lett. 107, pg 188302 (2011).
 
 ## 15-11-2022
 
-## Usage for lammps verson
+# Usage for lammps verson
 usage: `KymoKnot_ring_lammps.x [options] input_file` (the same holds for KymoKnot_linear.x).
 
 input file must be in the format:
@@ -38,6 +38,7 @@ input file must be in the format:
         ...
 where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of beads.  Several configurations can be given one after the other in the same input file
 
+-------------------------------------------------------
 
 ## 15-02-2018 
 
