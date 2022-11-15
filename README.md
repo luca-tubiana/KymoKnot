@@ -26,7 +26,7 @@ Phys. Rev. Lett. 107, pg 188302 (2011).
 
 ## 15-11-2022
 
-# Usage for lammps verson
+### Usage for lammps verson
 usage: `KymoKnot_ring_lammps.x [options] input_file` (the same holds for KymoKnot_linear.x).
 
 input file must be in the format:
