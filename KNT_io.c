@@ -281,7 +281,8 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
     free ( line );
     line = NULL;
 
-    buffer =  d2t(length,3);
+    buffer =  d2t(length+1,3); // here we set to make the start and the end point is the same point
+    // therefore for a ring with N we need N+1
     read = getline (&line,&len,fp);//skip one line in lammps file
 
     for ( i = 0; i < length ; i++ )
@@ -302,6 +303,7 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
             free_d2t(buffer);
             failed("failed to read line in input file");
         }
+
         //done reading the line, let's separate it into 3 columns.
         j = 0;
         l_ptr = string;
@@ -340,7 +342,13 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
             free ( col[j+1] );
         }
     }
-    if ( dist_d (buffer[0],buffer[length-1],3)> 1.2*dist_d (buffer[0],buffer[1],3))
+ // close the ring if the ring is like 1234 -> 12341
+    for ( j=0;j<3 ;j++)
+    {
+        buffer[i][j] = buffer[0][j];
+    }
+
+    if ( dist_d (buffer[0],buffer[length-1],3)> 1.0e-6)
     {
         failed("ERROR. first and last node do not coincide\n");
     }
