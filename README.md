@@ -24,6 +24,20 @@ code must be used with caution when analyzing complex knots.  The table of known
 [Multiscale entanglement in ring polymers under spherical confinement](http://prl.aps.org/pdf/PRL/v107/i18/e188302)
 Phys. Rev. Lett. 107, pg 188302 (2011).
 
+## 15-11-2022
+
+## Usage for lammps verson
+usage: `KymoKnot_ring_lammps.x [options] input_file` (the same holds for KymoKnot_linear.x).
+
+input file must be in the format:
+
+        N
+        xxxx some words 
+        1 x y z
+        1 x y z
+        ...
+where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of beads.  Several configurations can be given one after the other in the same input file
+
 
 ## 15-02-2018 
 
@@ -43,17 +57,6 @@ input file must be in the format:
         ...
 where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` must coincide.  Several configurations can be given one after the other in the same input file
 
-## Usage for lammps verson
-usage: `KymoKnot_ring_lammps.x [options] input_file` (the same holds for KymoKnot_linear.x).
-
-input file must be in the format:
-
-        N
-        xxxx some words 
-        1 x y z
-        1 x y z
-        ...
-where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of beads.  Several configurations can be given one after the other in the same input file
 
 ### OUTPUT
 - BU__  [ -b option ]: shortest knotted portion. Bottom-up search
