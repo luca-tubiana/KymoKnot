@@ -43,6 +43,18 @@ input file must be in the format:
         ...
 where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` must coincide.  Several configurations can be given one after the other in the same input file
 
+## Usage for lammps verson
+usage: `KymoKnot_ring_lammps.x [options] input_file` (the same holds for KymoKnot_linear.x).
+
+input file must be in the format:
+
+        N
+        xxxx some words 
+        1 x y z
+        1 x y z
+        ...
+where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of beads.  Several configurations can be given one after the other in the same input file
+
 ### OUTPUT
 - BU__  [ -b option ]: shortest knotted portion. Bottom-up search
 - NBU__ [ -u option ]:  bottom-up search, without unknottedness check on complementar arc
