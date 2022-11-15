@@ -36,7 +36,7 @@ input file must be in the format:
         1 x y z
         1 x y z
         ...
-where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of beads.  Several configurations can be given one after the other in the same input file
+where N is the length of the coordinate sets.  If the input files contain coordinate of rings, the edges `x_0 y_0 z_0` and `x_(N-1) y_(N-1) z_(N-1)` 's distance is the diameter of a bead.  Several configurations can be given one after the other in the same input file
 
 -------------------------------------------------------
 
