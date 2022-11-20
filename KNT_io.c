@@ -260,7 +260,7 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
     ssize_t read;
     char *line = NULL;
     char *l_ptr;
-    char *col[3];
+    char *col[4];
     char *token;
     char *saveptr;
     char string[2048];
@@ -325,17 +325,18 @@ KNTarc *  KNTIOread_ring_lammps_version(  FILE * fp )
             j++;
         }
         // skip the test
-//        if (j < 4 )
-//        {
-//            fprintf(stderr,"Jammed column:\n");
-//            for ( int k = 0 ; k< j ;k++ )
-//            {
-//                fprintf(stderr,"%s\t",col[k]);
-//            }
-//            fprintf(stderr,"\n");
-//            free ( line );
-//            failed("Jammed columns in input file");
-//        }
+        if (j < 4 )
+        {
+           fprintf(stderr,"Jammed column:\n");
+            for ( int k = 0 ; k< j ;k++ )
+            {
+                fprintf(stderr,"%s\t",col[k]);
+            }
+           fprintf(stderr,"\n");
+            free ( line );
+            failed("Jammed columns in input file");
+       }
+        free(col[0]);
         for ( j=0;j<3 ;j++)
         {
             buffer[i][j] = atof(col[j+1]);
@@ -391,7 +392,7 @@ KNTarc *  KNTIOread_linear_lammps_version(  FILE * fp )
     ssize_t read;
     char *line = NULL;
     char *l_ptr;
-    char *col[3];
+    char *col[4];
     char *token;
     char *saveptr;
     char string[2048];
@@ -452,18 +453,18 @@ KNTarc *  KNTIOread_linear_lammps_version(  FILE * fp )
             strcpy ( col[j], token);
             j++;
         }
-// though it should work but when j=4,it will run, I do not know why
-//        if (j < 4 )
-//        {
-//            fprintf(stderr,"Jammed column:\n");
-//            for ( int k = 0 ; k< j ;k++ )
-//            {
-//                fprintf(stderr,"%s\t",col[k]);
-//            }
-//            fprintf(stderr,"\n");
-//            free ( line );
-//            failed("Jammed columns in input file");
-//        }
+        if (j < 4 )
+        {
+            fprintf(stderr,"Jammed column:\n");
+            for ( int k = 0 ; k< j ;k++ )
+           {
+               fprintf(stderr,"%s\t",col[k]);
+            }
+           fprintf(stderr,"\n");
+            free ( line );
+            failed("Jammed columns in input file");
+        }
+        free(col[0]);
         for ( j=0;j<3 ;j++)
         {
             buffer[i][j] = atof(col[j+1]);
